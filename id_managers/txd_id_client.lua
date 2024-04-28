@@ -8,8 +8,10 @@ local lastFreePos = 0
 
 local function genValidTXDList()
     local engineGetModelTXDID = engineGetModelTXDID
-    for _, modelInfo in pairs(ID_list) do
-        AVIALABLE_TXD[engineGetModelTXDID(modelInfo[1])] = true;
+    for _, list in pairs{ ID_LIST_ATOMIC, ID_LIST_CLUMP, ID_LIST_TIMED } do
+        for _, modelId in pairs(list) do
+            AVIALABLE_TXD[engineGetModelTXDID(modelId)] = true;
+        end
     end
 
     for modelId in pairs(AVIALABLE_TXD) do

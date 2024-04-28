@@ -2,9 +2,9 @@
 ---@type (integer | false)[]
 local aviableIDs = {}
 
-local ID_list = ID_list
+local ID_list = ID_LIST_ATOMIC
 for i = 1, #ID_list do
-	aviableIDs[i] = ID_list[i][1]
+	aviableIDs[i] = ID_list[i]
 end
 
 local lastAviable = #aviableIDs

@@ -8,7 +8,9 @@
 	<script src="features/ColMapLoader_client.lua"  type="client" />
 	<script src="features/WaterLoader_client.lua"  type="client" />
 
-	<script src="id_managers/ID_list.lua"  type="client" />
+	<script src="id_managers/ID_LIST_ATOMIC.lua"  type="client" />
+	<script src="id_managers/ID_LIST_CLUMP.lua"  type="client" />
+	<script src="id_managers/ID_LIST_TIMED.lua"  type="client" />
 	<script src="id_managers/model_id_client.lua"  type="client" />
 	<script src="id_managers/txd_id_client.lua"  type="client" />
 	
