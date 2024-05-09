@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
+    ],
+    "lua.targetVersion": "5.1",
+    "Lua.runtime.version": "Lua 5.1"
+}
