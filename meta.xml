@@ -34,7 +34,7 @@
 
 	<script src="WorldSA_client.lua" type="client" />
 
-	<script src="debugPipe_client.lua"  type="client" />
+	<!-- <script src="debugPipe_client.lua"  type="client" /> -->
 
 	<script src="main_client.lua"  type="client" />
 	<script src="main_server.lua"  type="server" />
