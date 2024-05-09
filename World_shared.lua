@@ -3,7 +3,8 @@
 ---@field name string
 ---@field imgs string[]
 ---@field mapPath string
----@field mapType "lua_v2" | "lua_v1" | "JS"
+---@field mapType "lua"
+---@field formatVersion number
 ---@field generic boolean
 ---@field dynamicMapPath string
 ---@field resource Element
@@ -18,6 +19,7 @@ function World:create( data )
 	self.imgs = data.imgs
 	self.mapPath = data.mapPath
 	self.mapType = data.mapType
+	self.formatVersion = data.formatVersion
 	self.generic = data.generic
 	self.dynamicMapPath = data.dynamicMapPath
 

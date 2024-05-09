@@ -10,13 +10,16 @@ function StaticIMGModelLoader:create( colmap, modelDefs, imgList )
     ---@private
     self.colmap = colmap
     ---@private
-    ---@type IObjectDef[]
+    ---@type IDefs
     self.modelDefs = modelDefs
     ---@private
     self.imgList = imgList
     ---@private
     ---@type number[]
     self.usedTXD = {}
+    ---@private
+    ---@type table<number, { [1]: number, [2]: number }>
+    self.oldVisibleTime = {}
 end;
 
 function StaticIMGModelLoader:destroy( )
@@ -82,35 +85,61 @@ function StaticIMGModelLoader:loadModels( )
     local img = self.loadedImgs[1]
     local cols = self.colLoader and self.colLoader:getCols() or {}
 
-    local defs = self.modelDefs
-    for _, def in pairs( defs ) do
-        local modelId = getFreeModelId()
-        def[1] = modelId
+    local getFreeTxdID = TxdSAModelManager.getFreeID
+    local getFreeModelId
 
-        if def[4] then
-            engineReplaceCOL(cols[def[4]], modelId)
-        end
+    ---@param def IAtomicDefs
+    local function loadAtomicModel(def)
+            local modelId = getFreeModelId()
+            def[1] = modelId
 
-        local txdId = allocatedTxd[ def[3] ]
-        if not txdId then
-            txdId = getFreeTxdID()
-            table.insert(self.usedTXD, txdId)
-            allocatedTxd[ def[3] ] = txdId
+            if def[4] then
+                engineReplaceCOL(cols[def[4]], modelId)
+            end
 
-            img:linkTXD(def[3] - 1, txdId)
-        end
+            local txdId = allocatedTxd[ def[3] ]
+            if not txdId then
+                txdId = getFreeTxdID()
+                table.insert(self.usedTXD, txdId)
+                allocatedTxd[ def[3] ] = txdId
 
-        engineSetModelTXDID( modelId, txdId )
+                img:linkTXD(def[3] - 1, txdId)
+            end
 
-        img:linkDFF( def[2] - 1, modelId )
+            engineSetModelTXDID( modelId, txdId )
 
-        engineSetModelFlags( modelId, def[6], true )
-        engineSetModelLODDistance( modelId, def[5] )
+            img:linkDFF( def[2] - 1, modelId )
+
+            engineSetModelFlags( modelId, def[6], true )
+            engineSetModelLODDistance( modelId, def[5] )
+    end
+
+    local defsByType = self.modelDefs
+    for _, def in pairs( defsByType.atomic ) do
+        getFreeModelId = AtomicMixedModelManager.getFreeID
+        loadAtomicModel(def)
+    end
+
+    for _, def in pairs( defsByType.clump ) do
+        getFreeModelId = ClumpMixedModelManager.getFreeID
+        loadAtomicModel(def)
+    end
+
+    local oldVisibleTime = self.oldVisibleTime
+    local engineSetModelVisibleTime = engineSetModelVisibleTime
+    local engineGetModelVisibleTime = engineGetModelVisibleTime
+
+    for _, def in pairs( defsByType.timed ) do
+        getFreeModelId = TimedMixedModelManager.getFreeID
+        loadAtomicModel(def)
+        oldVisibleTime[ def[1] ] = { engineGetModelVisibleTime(def[1]) }
+        engineSetModelVisibleTime(def[1], def[7], def[8])
     end
 end;
 
 ---@private
 function StaticIMGModelLoader:unloadModels()
+    local restoreTxdId = TxdSAModelManager.restoreID
     local txds = self.usedTXD
     for i = 1, #txds do
         restoreTxdId(txds[i])
@@ -118,10 +147,14 @@ function StaticIMGModelLoader:unloadModels()
 
     local defs = self.modelDefs
 
-    ---@type number
-    local modelID
-    for _, def in pairs( defs ) do
-        modelID = def[1]
+    local engineResetModelTXDID = engineResetModelTXDID
+    local engineRestoreCOL = engineRestoreCOL
+    local engineResetModelFlags = engineResetModelFlags
+    local engineResetModelLODDistance = engineResetModelLODDistance
+
+    ---@param def IAtomicDefs
+    local function unloadAtomic(def)
+        local modelID = def[1]
         engineResetModelTXDID(modelID)
 
         if def[4] then
@@ -132,4 +165,21 @@ function StaticIMGModelLoader:unloadModels()
         engineResetModelLODDistance(modelID)
     end
 
+    for _, def in pairs( defs.atomic ) do
+        unloadAtomic(def)
+    end
+
+    for _, def in pairs( defs.clump ) do
+        unloadAtomic(def)
+    end
+
+    local oldVisibleTime = self.oldVisibleTime
+    local visibleTime
+
+    local engineSetModelVisibleTime = engineSetModelVisibleTime
+    for _, def in pairs( defs.timed ) do
+        unloadAtomic(def)
+        visibleTime = oldVisibleTime[def[1]]
+        engineSetModelVisibleTime(def[1], visibleTime[7], visibleTime[8])
+    end
 end

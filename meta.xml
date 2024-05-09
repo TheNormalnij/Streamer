@@ -11,8 +11,10 @@
 	<script src="id_managers/ID_LIST_ATOMIC.lua"  type="client" />
 	<script src="id_managers/ID_LIST_CLUMP.lua"  type="client" />
 	<script src="id_managers/ID_LIST_TIMED.lua"  type="client" />
-	<script src="id_managers/model_id_client.lua"  type="client" />
-	<script src="id_managers/txd_id_client.lua"  type="client" />
+	<script src="id_managers/IdManager_client.lua"  type="client" />
+	<script src="id_managers/DynamicModelIdManager_client.lua"  type="client" />
+	<script src="id_managers/MixedIdModelManager_client.lua"  type="client" />
+	<script src="id_managers/managers_client.lua"  type="client" />
 	
 	<script src="loaders/SanAndreasWorldLoader_client.lua"  type="client" />
 	<script src="loaders/StaticIMGLoader_client.lua"  type="client" />
@@ -22,9 +24,7 @@
 
 	<script src="streamers/MtaObjectStaticStreamer_client.lua"  type="client" />
 
-	<script src="map_readers/js_client.lua" type="client" />
-	<script src="map_readers/luaV1_client.lua" type="client" />
-	<script src="map_readers/luaV2_client.lua" type="client" />
+	<script src="map_readers/lua_client.lua" type="client" />
 	<script src="map_readers/readMap_client.lua" type="client" />
 
 	<script src="WorldLoader_client.lua" type="client" />
@@ -34,15 +34,13 @@
 
 	<script src="WorldSA_client.lua" type="client" />
 
-	<!-- <script src="debugPipe_client.lua"  type="client" /> -->
+	<script src="debugPipe_client.lua"  type="client" />
 
 	<script src="main_client.lua"  type="client" />
 	<script src="main_server.lua"  type="server" />
 
 	<export function="registerWorld" type="shared" />
 	<export function="getWorlds" type="shared" />
-
-	<export function="lockID" type="client" />
 
 	<download_priority_group>200</download_priority_group>
 </meta>

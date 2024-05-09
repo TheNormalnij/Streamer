@@ -1,25 +1,29 @@
 
----@alias IObjectDef number[]
+---@alias IAtomicDefs number[]
+---@alias ITimedDefs number[]
+---@alias IClumpDefs number[]
+
+---@class IDefs
+---@field atomic IAtomicDefs[]
+---@field timed ITimedDefs[]
+---@field clump IClumpDefs[]
+
 ---@alias IObjectPositionDef any[]
 ---@alias IWaterDef number[]
 ---@alias IColDef number[]
 
 ---@class IMapInfo
----@field new IObjectDef[]
+---@field defs IDefs
 ---@field colmap IColDef[]
 ---@field map IObjectPositionDef[]
 ---@field water IWaterDef[]
 
 --- Read world map info
----@param world any
+---@param world World
 ---@return IMapInfo
 function readMap( world )
-    if world.mapType == 'lua_v2' then
-        return readMapLuaV2(world.mapPath)
-    elseif world.mapType == 'lua_v1' then
-        return readMapLuaV1(world.mapPath, world.imgs)
-    elseif world.mapType == 'JS' then
-        return readMapJS(world.mapPath, world.imgs)
+    if world.mapType == 'lua' then
+        return readLuaMap(world.mapPath)
     end
     error("Incorrent map type", 2)
 end

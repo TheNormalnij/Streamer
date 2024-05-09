@@ -26,13 +26,14 @@ function WaterLoader:load( )
     end
     local waterData = self.waterData
     local loadedWater = self.loadedWater
+    local createWater = createWater
     local def
     for i = 1, #waterData do
         def = waterData[i]
         if #def == 29 then
-            loadedWater[i] = createWater( def[1], def[2], def[3], def[8], def[9], def[10], def[15], def[16], def[17], def[22], def[23], def[24], def[29] >= 2 )
+            loadedWater[i] = createWater( def[1], def[2], def[3], def[4], def[5], def[6], def[7], def[8], def[9], def[10], def[11], def[12], def[13] )
         else
-            loadedWater[i] = createWater( def[1], def[2], def[3], def[8], def[9], def[10], def[15], def[16], def[17], def[22] >= 2 )
+            loadedWater[i] = createWater( def[1], def[2], def[3], def[4], def[5], def[6], def[7], def[8], def[9], def[10] )
         end
     end
 

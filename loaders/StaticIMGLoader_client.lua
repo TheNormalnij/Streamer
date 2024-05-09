@@ -34,10 +34,10 @@ function StaticIMGLoader:load( )
         return false
     end
 
-    self.modelLoader = StaticIMGModelLoader(worldInfo.colmap, worldInfo.new, self.world:getIMGs())
+    self.modelLoader = StaticIMGModelLoader(worldInfo.colmap, worldInfo.defs, self.world:getIMGs())
     self.modelLoader:load()
 
-    self.streamer = MtaObjectStaticStreamer(worldInfo.map, worldInfo.new)
+    self.streamer = MtaObjectStaticStreamer(worldInfo.map, worldInfo.defs)
     self.streamer:start()
 
     self.water = WaterLoader(worldInfo.water)

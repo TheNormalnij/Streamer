@@ -48,3 +48,21 @@ engineGetModelTXDID = nil
 
 ---@type fun(state: boolean): boolean
 setOcclusionsEnabled = nil
+
+---@type fun(modelId: number, on: number, off: number): boolean
+engineSetModelVisibleTime = nil
+
+---@type fun(modelId: number): number, number
+engineGetModelVisibleTime = nil
+
+---@type fun(type: 'object' | 'clump' | 'timed-object' | 'ped' | 'vehicle'): number | false
+engineRequestModel = nil
+
+---@type fun(id: number): boolean
+engineFreeModel = nil
+
+---@type Element
+root = nil
+
+---@type Element
+resourceRoot = nil

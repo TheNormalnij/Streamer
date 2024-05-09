@@ -1,18 +1,17 @@
 
----@class MtaObjectStaticStreamer : IStreamer, IWithDestructor
+---@class (exact) MtaObjectStaticStreamer : IStreamer, IWithDestructor
+---@field private map IObjectPositionDef[]
+---@field private defs IDefs
+---@field private enabled boolean
+---@field private objects Building[]
 MtaObjectStaticStreamer = class()
 
 ---@param map IObjectPositionDef[]
----@param defs IObjectDef[]
+---@param defs IDefs[]
 function MtaObjectStaticStreamer:create( map, defs )
-    ---@private
     self.map = map
-    ---@private
     self.defs = defs
-    ---@private
     self.enabled = false
-    ---@private
-    ---@type Object[]
     self.objects = {}
 end
 
@@ -46,7 +45,7 @@ end
 ---@private
 function MtaObjectStaticStreamer:createAllObjects( )
     local objectsData = self.map
-    local defs = self.defs
+    local defs = table.uniteArrays(self.defs.atomic, self.defs.timed, self.defs.clump)
 
     local objectData, modelID, def, object, lod
 
@@ -60,6 +59,7 @@ function MtaObjectStaticStreamer:createAllObjects( )
 
     for i = 1, #objectsData do
         objectData = objectsData[i]
+        -- TODO REMOVE +1
         def = defs[ objectData[2] ]
         modelID = objectData[2] and def[1] or objectData[1]
         object = createObject( modelID, objectData[4], objectData[5], objectData[6], objectData[7], objectData[8], objectData[9], objectData[10] )
