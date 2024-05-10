@@ -30,7 +30,7 @@ function WaterLoader:load( )
     local def
     for i = 1, #waterData do
         def = waterData[i]
-        if #def == 29 then
+        if #def == 13 then
             loadedWater[i] = createWater( def[1], def[2], def[3], def[4], def[5], def[6], def[7], def[8], def[9], def[10], def[11], def[12], def[13] )
         else
             loadedWater[i] = createWater( def[1], def[2], def[3], def[4], def[5], def[6], def[7], def[8], def[9], def[10] )
