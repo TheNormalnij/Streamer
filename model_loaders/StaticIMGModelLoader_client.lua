@@ -103,12 +103,12 @@ function StaticIMGModelLoader:loadModels( )
                 table.insert(self.usedTXD, txdId)
                 allocatedTxd[ def[3] ] = txdId
 
-                img:linkTXD(def[3] - 1, txdId)
+                img:linkTXD(def[3], txdId)
             end
 
             engineSetModelTXDID( modelId, txdId )
 
-            img:linkDFF( def[2] - 1, modelId )
+            img:linkDFF( def[2], modelId )
 
             engineSetModelFlags( modelId, def[6], true )
             engineSetModelLODDistance( modelId, def[5] )
