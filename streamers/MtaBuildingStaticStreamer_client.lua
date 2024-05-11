@@ -73,7 +73,7 @@ function MtaBuildingStaticStreamer:createAllBuilding( )
                 end
             end
         else
-            outputDebugString( 'Object can not be created ' ..  modelID, 2 )
+            outputDebugString( 'Building can not be created ' ..  modelID, 2 )
         end
         loadedBuildings[i] = building
     end

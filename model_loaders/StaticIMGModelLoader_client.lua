@@ -31,7 +31,7 @@ function StaticIMGModelLoader:load( )
     self:loadIMGs()
     self:loadCOLs( self.colmap )
     self:loadModels( )
-    engineRestreamWorld()
+    engineRestreamWorld(true)
 end;
 
 function StaticIMGModelLoader:unload( )
@@ -42,7 +42,7 @@ function StaticIMGModelLoader:unload( )
         self.colLoader:unload()
     end
 
-    engineRestreamWorld()
+    engineRestreamWorld(true)
 end;
 
 function StaticIMGModelLoader:loadIMGs( )
@@ -90,28 +90,28 @@ function StaticIMGModelLoader:loadModels( )
 
     ---@param def IAtomicDefs
     local function loadAtomicModel(def)
-            local modelId = getFreeModelId()
-            def[1] = modelId
+        local modelId = getFreeModelId()
+        def[1] = modelId
 
-            if def[4] then
-                engineReplaceCOL(cols[def[4]], modelId)
-            end
+        if def[4] then
+            engineReplaceCOL(cols[def[4]], modelId)
+        end
 
-            local txdId = allocatedTxd[ def[3] ]
-            if not txdId then
-                txdId = getFreeTxdID()
-                table.insert(self.usedTXD, txdId)
-                allocatedTxd[ def[3] ] = txdId
+        local txdId = allocatedTxd[ def[3] ]
+        if not txdId then
+            txdId = getFreeTxdID()
+            table.insert(self.usedTXD, txdId)
+            allocatedTxd[ def[3] ] = txdId
 
-                img:linkTXD(def[3], txdId)
-            end
+            img:linkTXD(def[3], txdId)
+        end
 
-            engineSetModelTXDID( modelId, txdId )
+        engineSetModelTXDID( modelId, txdId )
 
-            img:linkDFF( def[2], modelId )
+        img:linkDFF( def[2], modelId )
 
-            engineSetModelFlags( modelId, def[6], true )
-            engineSetModelLODDistance( modelId, def[5] )
+        engineSetModelFlags( modelId, def[6], true )
+        engineSetModelLODDistance( modelId, def[5] )
     end
 
     local defsByType = self.modelDefs

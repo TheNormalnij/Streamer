@@ -7,7 +7,7 @@ function readLuaMap(mapPath)
     if not file then
         error("Can not read map file")
     end
-    local loadFun = loadstring( file:read( file:getSize(), mapPath ) )
+    local loadFun = loadstring(file:getContents())
 
     file:close()
 

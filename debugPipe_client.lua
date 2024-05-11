@@ -15,8 +15,8 @@ local function actionSearch()
 			dxDrawText( hitElement:getModel(), 100, 300, 200, 320 )
 			dxDrawText( tostring( hitElement:getData( 'def' ) ), 100, 320, 200, 340 )
 			dxDrawText( tostring( hitElement:getData( 'previd' ) ), 100, 340, 200, 360 )
-			dxDrawText( tostring( hitElement:getPosition( ) ), 100, 360, 200, 360 )
-			dxDrawText( tostring( hitElement:getRotation( ) ), 100, 380, 200, 360 )
+			dxDrawText( tostring( hitElement:getPosition( ) ), 100, 360, 200, 380 )
+			dxDrawText( tostring( hitElement:getRotation( ) ), 100, 380, 200, 400 )
 		else
 			dxDrawText( wolrdModelID, 100, 300, 200, 320 )
 			if wmz then
@@ -24,7 +24,7 @@ local function actionSearch()
 				dxDrawText( wmrx .. ' ' ..  wmry .. ' ' .. wmrz, 100, 340, 200, 360 )
 			end
 			if wmlod then
-				dxDrawText( wmlod, 100, 360, 200, 360 )
+				dxDrawText( wmlod, 100, 360, 200, 380 )
 			end
 		end
 	end
@@ -49,8 +49,8 @@ local function deleteElement()
 	end
 end
 
-bindKey( 'z', 'down', startActionHandling )
-bindKey( 'z', 'up', stopActionHandling )
+bindKey( 'b', 'down', startActionHandling )
+bindKey( 'b', 'up', stopActionHandling )
 bindKey( 'delete', 'down', deleteElement )
 
 

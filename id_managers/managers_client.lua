@@ -22,7 +22,7 @@ AtomicMixedModelManager = MixedModelIdManager(AtomicSAModelManager, AtomicDynami
 ---@type MixedModelIdManager
 TimedMixedModelManager = MixedModelIdManager(TimedSAModelManager, TimedDynamicModelManager)
 ---@type MixedModelIdManager
-ClumpMixedModelManager = MixedModelIdManager(ClumpSAModelManager, ClumpSAModelManager)
+ClumpMixedModelManager = MixedModelIdManager(ClumpSAModelManager, ClumpDynamicModelManager)
 
 -- For TXD
 

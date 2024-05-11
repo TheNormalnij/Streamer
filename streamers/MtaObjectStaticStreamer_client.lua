@@ -59,7 +59,6 @@ function MtaObjectStaticStreamer:createAllObjects( )
 
     for i = 1, #objectsData do
         objectData = objectsData[i]
-        -- TODO REMOVE +1
         def = defs[ objectData[2] ]
         modelID = objectData[2] and def[1] or objectData[1]
         object = createObject( modelID, objectData[4], objectData[5], objectData[6], objectData[7], objectData[8], objectData[9], objectData[10] )

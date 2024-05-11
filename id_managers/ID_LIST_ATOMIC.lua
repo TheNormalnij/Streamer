@@ -474,8 +474,8 @@ ID_LIST_ATOMIC = {
     1313,
     1314,
     1315,
-    1316,
-    1317,
+    -- 1316, Pickup rings for air transport CAN NOT BE UNLOADED
+    -- 1317, Cylinder CAN NOT BE UNLOADED
     1318,
     1319,
     1320,
@@ -716,7 +716,7 @@ ID_LIST_ATOMIC = {
     1556,
     1557,
     1558,
-    1559,
+    -- 1559, Enter Marker
     1560,
     1561,
     1562,
