@@ -1,4 +1,6 @@
 
+local lastElement = nil
+
 local function actionSearch()
 	local camX, camY, camZ = getCameraMatrix()
 	local rX, rY, wX, wY, wZ = getCursorPosition()
@@ -12,6 +14,7 @@ local function actionSearch()
 
 	if isHit then
 		if hitElement then
+			lastElement = hitElement
 			dxDrawText( hitElement:getModel(), 100, 300, 200, 320 )
 			dxDrawText( tostring( hitElement:getData( 'def' ) ), 100, 320, 200, 340 )
 			dxDrawText( tostring( hitElement:getData( 'previd' ) ), 100, 340, 200, 360 )
@@ -49,9 +52,23 @@ local function deleteElement()
 	end
 end
 
+local function tryRotate(key, state, rx, ry, rz)
+	if isElement(lastElement) then
+		lastElement:setRotation(lastElement:getRotation() + Vector3(rx, ry, rz) * 5)
+	end
+end
+
 bindKey( 'b', 'down', startActionHandling )
 bindKey( 'b', 'up', stopActionHandling )
 bindKey( 'delete', 'down', deleteElement )
+
+
+bindKey('num_1', 'down', tryRotate, -1, 0, 0)
+bindKey('num_3', 'down', tryRotate, 1, 0, 0)
+bindKey('num_4', 'down', tryRotate, 0, -1, 0)
+bindKey('num_6', 'down', tryRotate, 0, 1, 0)
+bindKey('num_7', 'down', tryRotate, 0, 0, -1)
+bindKey('num_9', 'down', tryRotate, 0, 0, 1)
 
 
 addCommandHandler( 'loadworld', function( cmd, ... )
