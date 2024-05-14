@@ -88,6 +88,15 @@ function StaticIMGModelLoader:loadModels( )
     local getFreeTxdID = TxdSAModelManager.getFreeID
     local getFreeModelId
 
+    local engineReplaceCOL = engineReplaceCOL
+    local engineSetModelTXDID = engineSetModelTXDID
+    local engineSetModelFlags = engineSetModelFlags
+    local engineSetModelLODDistance = engineSetModelLODDistance
+    local engineSetModelPhysicalPropertiesGroup = engineSetModelPhysicalPropertiesGroup
+    local engineImageLinkTXD = engineImageLinkTXD
+    local engineImageLinkDFF = engineImageLinkDFF
+
+
     ---@param def IAtomicDefs
     local function loadAtomicModel(def)
         local modelId = getFreeModelId()
@@ -103,15 +112,16 @@ function StaticIMGModelLoader:loadModels( )
             table.insert(self.usedTXD, txdId)
             allocatedTxd[ def[3] ] = txdId
 
-            img:linkTXD(def[3], txdId)
+            engineImageLinkTXD(img, def[3], txdId)
         end
 
         engineSetModelTXDID( modelId, txdId )
 
-        img:linkDFF( def[2], modelId )
+        engineImageLinkDFF(img, def[2], modelId)
 
         engineSetModelFlags( modelId, def[6], true )
         engineSetModelLODDistance( modelId, def[5] )
+        engineSetModelPhysicalPropertiesGroup(modelId, 1)
     end
 
     local defsByType = self.modelDefs

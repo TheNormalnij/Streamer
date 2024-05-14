@@ -67,7 +67,7 @@ function MtaBuildingStaticStreamer:createAllBuilding( )
                 setElementCollisionsEnabled( building, false )
             end
             if objectData[11] then
-                lod = map[ objectData[11] ]
+                lod = loadedBuildings[ objectData[11] ]
                 if lod then
                     setLowLODElement( building, lod )
                 end

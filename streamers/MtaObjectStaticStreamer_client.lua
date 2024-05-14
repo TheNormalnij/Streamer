@@ -3,7 +3,7 @@
 ---@field private map IObjectPositionDef[]
 ---@field private defs IDefs
 ---@field private enabled boolean
----@field private objects Building[]
+---@field private objects Object[]
 MtaObjectStaticStreamer = class()
 
 ---@param map IObjectPositionDef[]
@@ -70,8 +70,8 @@ function MtaObjectStaticStreamer:createAllObjects( )
             if def and not def[4] then
                 setElementCollisionsEnabled( object, false )
             end
-            if objectData[11] then
-                lod = objectsData[ objectData[11] ]
+            if objectData[11] ~= -1 then
+                lod = loadedObjects[ objectData[11] ]
                 if lod then
                     setLowLODElement( object, lod )
                 end

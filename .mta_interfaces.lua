@@ -31,7 +31,7 @@ setLowLODElement = nil
 ---@type fun(element: Element, enabled: boolean): boolean
 setElementCollisionsEnabled = nil
 
----@type fun()
+---@type fun(reloadBigLods?: boolean)
 engineRestreamWorld = nil
 
 ---@type fun(modelID: number, redius: number, x: number, y: number, z: number): boolean
@@ -66,3 +66,19 @@ root = nil
 
 ---@type Element
 resourceRoot = nil
+
+---@type Element
+sourceResourceRoot = nil
+
+---@type fun(): number
+getTickCount = nil
+
+
+---@type fun(eventName: string, remote?: boolean)
+addEvent = nil
+
+---@type fun(eventName: string, root: Element, handler: function)
+addEventHandler = nil
+
+---@type fun(eventName: string, root: Element, ...: any)
+triggerEvent = nil
