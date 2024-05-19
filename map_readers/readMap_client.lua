@@ -17,6 +17,7 @@
 ---@field colmap IColDef[]
 ---@field map IObjectPositionDef[]
 ---@field water IWaterDef[]
+---@field physical IPhysicalData
 
 --- Read world map info
 ---@param world World

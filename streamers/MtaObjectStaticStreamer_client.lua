@@ -1,13 +1,13 @@
 
 ---@class (exact) MtaObjectStaticStreamer : IStreamer, IWithDestructor
 ---@field private map IObjectPositionDef[]
----@field private defs IDefs
+---@field private defs number[][]
 ---@field private enabled boolean
 ---@field private objects Object[]
 MtaObjectStaticStreamer = class()
 
 ---@param map IObjectPositionDef[]
----@param defs IDefs[]
+---@param defs number[][]
 function MtaObjectStaticStreamer:create( map, defs )
     self.map = map
     self.defs = defs
@@ -45,7 +45,7 @@ end
 ---@private
 function MtaObjectStaticStreamer:createAllObjects( )
     local objectsData = self.map
-    local defs = table.uniteArrays(self.defs.atomic, self.defs.timed, self.defs.clump)
+    local defs = self.defs
 
     local objectData, modelID, def, object, lod
 

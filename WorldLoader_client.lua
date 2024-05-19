@@ -65,8 +65,8 @@ function WorldLoader:tryLoadWorld( world )
     if instance:load() then
         self.instances[world] = instance
 
-            local finishTick = getTickCount()
-            outputDebugString('World was loaded after ' .. (finishTick - ticks)/1000, 3)
+        local finishTick = getTickCount()
+        outputDebugString('World was loaded after ' .. (finishTick - ticks)/1000, 3)
         return true
     end
 

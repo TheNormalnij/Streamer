@@ -1,24 +1,20 @@
 
 ---@class StaticIMGModelLoader : Class, IWithDestructor
+---@field private loadedImgs IMG[]
+---@field private colLoader ColMapLoader
+---@field private colmap table<number, { [1]: number, [2]: number }>
+---@field private modelDefs IDefs
+---@field private imgList string[]
+---@field private usedTXD number[]
+---@field private oldVisibleTime table<number, { [1]: number, [2]: number }>
 StaticIMGModelLoader = class()
-
 function StaticIMGModelLoader:create( colmap, modelDefs, imgList )
-    ---@private
     self.loadedImgs = {}
-    ---@private
     self.colLoader = nil
-    ---@private
     self.colmap = colmap
-    ---@private
-    ---@type IDefs
     self.modelDefs = modelDefs
-    ---@private
     self.imgList = imgList
-    ---@private
-    ---@type number[]
     self.usedTXD = {}
-    ---@private
-    ---@type table<number, { [1]: number, [2]: number }>
     self.oldVisibleTime = {}
 end;
 

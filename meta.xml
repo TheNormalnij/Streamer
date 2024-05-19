@@ -7,6 +7,7 @@
 
 	<script src="features/ColMapLoader_client.lua"  type="client" />
 	<script src="features/WaterLoader_client.lua"  type="client" />
+	<script src="features/PhysicalPropertiesLoader_client.lua"  type="client" />
 
 	<script src="id_managers/ID_LIST_ATOMIC.lua"  type="client" />
 	<script src="id_managers/ID_LIST_CLUMP.lua"  type="client" />

@@ -5,6 +5,7 @@
 ---@class Object : Element
 ---@class Building : Element
 ---@class Water : Element
+---@class IMG : Element
 
 ---@type fun(element: Element): boolean
 destroyElement = nil

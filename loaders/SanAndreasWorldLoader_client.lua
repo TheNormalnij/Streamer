@@ -15,7 +15,7 @@ function SanAndreasWorldLoader:load()
     resetWaterLevel()
 
     return true
-end;
+end
 
 function SanAndreasWorldLoader:unload()
     local removeWorldModel = removeWorldModel
