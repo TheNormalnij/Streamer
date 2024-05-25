@@ -1,5 +1,6 @@
 <meta>
 	<info type="script" name="World loader" author="TheNormalnij" description="World loader" version="1.1" />
+	<min_mta_version client="1.6.0-0.22420" />
 	<oop>true</oop>
 
 	<script src="class.lua" type="shared" />
