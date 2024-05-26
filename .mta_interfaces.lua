@@ -83,3 +83,12 @@ addEventHandler = nil
 
 ---@type fun(eventName: string, root: Element, ...: any)
 triggerEvent = nil
+
+---@type fun()
+removeAllGameBuildings = nil
+
+---@type fun()
+restoreAllGameBuildings = nil
+
+---@type fun()
+resetWaterLevel = nil

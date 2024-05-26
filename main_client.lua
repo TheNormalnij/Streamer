@@ -1,7 +1,9 @@
 
 addEvent("World:requestLoad", true)
 
+---@type WorldLoader | nil
 local pWorldLoader
+---@type WorldManager | nil
 local pWorldManager
 
 addEventHandler( "onClientResourceStart", resourceRoot, function()
@@ -12,11 +14,15 @@ addEventHandler( "onClientResourceStart", resourceRoot, function()
 end )
 
 addEventHandler( "onClientResourceStop", resourceRoot, function()
-	pWorldManager:destroy()
-    pWorldManager = nil
+    if pWorldManager then
+        pWorldManager:destroy()
+        pWorldManager = nil
+    end
 
-    pWorldLoader:destroy()
-    pWorldLoader = nil
+    if pWorldLoader then
+        pWorldLoader:destroy()
+        pWorldLoader = nil
+    end
 end )
 
 ---@param worldName string

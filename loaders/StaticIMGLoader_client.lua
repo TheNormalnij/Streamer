@@ -55,8 +55,10 @@ function StaticIMGLoader:load( )
 end
 
 function StaticIMGLoader:unload( )
-    if self.streamer then
-        self.streamer:stop()
+    -- We need unload models first to avoid crashes
+    -- Slower and stupid
+    if self.modelLoader then
+        self.modelLoader:unload()
     end
 
     if self.water then
@@ -67,8 +69,8 @@ function StaticIMGLoader:unload( )
         self.physical:unload()
     end
 
-    if self.modelLoader then
-        self.modelLoader:unload()
+    if self.streamer then
+        self.streamer:stop()
     end
 
     return true

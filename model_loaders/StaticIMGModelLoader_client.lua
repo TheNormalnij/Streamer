@@ -157,6 +157,7 @@ function StaticIMGModelLoader:unloadModels()
     local engineRestoreCOL = engineRestoreCOL
     local engineResetModelFlags = engineResetModelFlags
     local engineResetModelLODDistance = engineResetModelLODDistance
+    local freeModel
 
     ---@param def IAtomicDefs
     local function unloadAtomic(def)
@@ -169,12 +170,15 @@ function StaticIMGModelLoader:unloadModels()
 
         engineResetModelFlags(modelID)
         engineResetModelLODDistance(modelID)
+        freeModel(modelID)
     end
 
+    freeModel = AtomicMixedModelManager.restoreID
     for _, def in pairs( defs.atomic ) do
         unloadAtomic(def)
     end
 
+    freeModel = ClumpMixedModelManager.restoreID
     for _, def in pairs( defs.clump ) do
         unloadAtomic(def)
     end
@@ -182,10 +186,11 @@ function StaticIMGModelLoader:unloadModels()
     local oldVisibleTime = self.oldVisibleTime
     local visibleTime
 
+    freeModel = TimedMixedModelManager.restoreID
     local engineSetModelVisibleTime = engineSetModelVisibleTime
     for _, def in pairs( defs.timed ) do
-        unloadAtomic(def)
         visibleTime = oldVisibleTime[def[1]]
-        engineSetModelVisibleTime(def[1], visibleTime[7], visibleTime[8])
+        engineSetModelVisibleTime(def[1], visibleTime[1], visibleTime[2])
+        unloadAtomic(def)
     end
 end
