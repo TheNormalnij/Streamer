@@ -44,7 +44,7 @@ end
 
 ---@private
 function MtaObjectStaticStreamer:createAllObjects( )
-    local objectsData = self.map
+    local map = self.map
     local defs = self.defs
 
     local objectData, modelID, def, object, lod
@@ -57,8 +57,8 @@ function MtaObjectStaticStreamer:createAllObjects( )
     local createObject = createObject
     local setElementCollisionsEnabled = setElementCollisionsEnabled
 
-    for i = 1, #objectsData do
-        objectData = objectsData[i]
+    for i = 1, #map do
+        objectData = map[i]
         def = defs[ objectData[2] ]
         modelID = objectData[2] and def[1] or objectData[1]
         object = createObject( modelID, objectData[4], objectData[5], objectData[6], objectData[7], objectData[8], objectData[9], objectData[10] )

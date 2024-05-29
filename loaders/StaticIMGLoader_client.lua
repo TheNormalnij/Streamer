@@ -42,7 +42,11 @@ function StaticIMGLoader:load( )
 
     local defs = table.uniteArrays(worldInfo.defs.atomic, worldInfo.defs.timed, worldInfo.defs.clump)
 
-    self.streamer = #worldInfo.map <= 13000 and MtaBuildingStaticStreamer(worldInfo.map, defs) or MtaObjectStaticStreamer(worldInfo.map, defs)
+    if #worldInfo.map > engineGetPoolCapacity('building') then
+        engineSetPoolCapacity('building', #worldInfo.map + 2000)
+    end
+
+    self.streamer = MtaBuildingStaticStreamer(worldInfo.map, defs)
     self.streamer:start()
 
     self.water = WaterLoader(worldInfo.water)

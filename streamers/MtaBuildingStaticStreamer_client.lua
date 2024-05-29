@@ -36,7 +36,7 @@ function MtaBuildingStaticStreamer:stop( )
         return false
     end
 
-    self:destroyAllObjects()
+    self:destroyAllBuildings()
 
     self.enabled = false
     return true
@@ -45,7 +45,7 @@ end
 ---@private
 function MtaBuildingStaticStreamer:createAllBuilding( )
     local map = self.map
-    local defs = table.uniteArrays(self.defs.atomic, self.defs.timed, self.defs.clump)
+    local defs = self.defs
 
     local objectData, modelID, def, building, lod
 
@@ -66,7 +66,7 @@ function MtaBuildingStaticStreamer:createAllBuilding( )
             if def and not def[4] then
                 setElementCollisionsEnabled( building, false )
             end
-            if objectData[11] then
+            if objectData[11] ~= -1 then
                 lod = loadedBuildings[ objectData[11] ]
                 if lod then
                     setLowLODElement( building, lod )
@@ -80,7 +80,7 @@ function MtaBuildingStaticStreamer:createAllBuilding( )
 end
 
 ---@private
-function MtaBuildingStaticStreamer:destroyAllObjects( )
+function MtaBuildingStaticStreamer:destroyAllBuildings( )
     local destroyElement = destroyElement
 
     local buildings = self.buildings
