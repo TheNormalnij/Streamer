@@ -7,7 +7,10 @@ function SanAndreasWorldLoader:destroy()
 end
 
 function SanAndreasWorldLoader:load()
-    restoreAllGameBuildings()
+    local restoreWorldModel = restoreWorldModel
+    for i = 550, 19999 do
+        restoreWorldModel(i,10000,0,0,0)
+    end
     setOcclusionsEnabled( true )
     resetWaterLevel()
 
@@ -15,7 +18,10 @@ function SanAndreasWorldLoader:load()
 end
 
 function SanAndreasWorldLoader:unload()
-    removeAllGameBuildings()
+    local removeWorldModel = removeWorldModel
+    for i = 550, 20000 do
+        removeWorldModel(i,10000,0,0,0)
+    end
     setOcclusionsEnabled( false )
     setWaterLevel( -5000, true, true, true, false )
 
