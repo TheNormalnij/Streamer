@@ -31,6 +31,7 @@ function MixedModelIdManager:create(static, dynamic)
     self.restoreID = function(id)
         if dynamicAllocatedSet[id] then
             restoreDynamicId(id)
+            dynamicAllocatedSet[id] = nil
         else
             restoreStaticId(id)
         end
