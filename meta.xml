@@ -10,9 +10,9 @@
 	<script src="features/WaterLoader_client.lua"  type="client" />
 	<script src="features/PhysicalPropertiesLoader_client.lua"  type="client" />
 
-	<script src="id_managers/ID_LIST_ATOMIC.lua"  type="client" />
-	<script src="id_managers/ID_LIST_CLUMP.lua"  type="client" />
-	<script src="id_managers/ID_LIST_TIMED.lua"  type="client" />
+	<script src="id_lists/ID_LIST_ATOMIC.lua"  type="client" />
+	<script src="id_lists/ID_LIST_CLUMP.lua"  type="client" />
+	<script src="id_lists/ID_LIST_TIMED.lua"  type="client" />
 	<script src="id_managers/IdManager_client.lua"  type="client" />
 	<script src="id_managers/DynamicModelIdManager_client.lua"  type="client" />
 	<script src="id_managers/MixedIdModelManager_client.lua"  type="client" />
