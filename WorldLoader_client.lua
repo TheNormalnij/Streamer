@@ -17,7 +17,6 @@ function WorldLoader:create( )
 end;
 
 function WorldLoader:destroy( )
-    self:unloadAllCurrent()
     self:load(self.default)
 end;
 

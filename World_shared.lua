@@ -9,6 +9,7 @@
 ---@field dynamicMapPath string
 ---@field resource Element
 ---@field resourceRoot Element
+---@field loader string | nil
 
 ---@class World : Class
 World = class()
@@ -22,6 +23,7 @@ function World:create( data )
 	self.formatVersion = data.formatVersion
 	self.generic = data.generic
 	self.dynamicMapPath = data.dynamicMapPath
+	self.loader = data.loader
 
 	self.resource = data.resource
 	self.resourceRoot = data.resourceRoot
