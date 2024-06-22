@@ -37,40 +37,44 @@ function StaticIMGLoader:load( )
         return false
     end
 
+    local currentPoolSize = engineGetPoolCapacity('building')
+    local requiredPoolSize = #worldInfo.map + 5000
+    if currentPoolSize < requiredPoolSize then
+        engineSetPoolCapacity('building', requiredPoolSize)
+    end
+
     self.modelLoader = StaticIMGModelLoader(worldInfo.colmap, worldInfo.defs, self.world:getIMGs())
     self.modelLoader:load()
 
     local defs = table.uniteArrays(worldInfo.defs.atomic, worldInfo.defs.timed, worldInfo.defs.clump)
 
-    self.streamer = MtaObjectStaticStreamer(worldInfo.map, defs)
+    self.physical = PhysicalPropertiesLoader(worldInfo.physical, defs)
+    self.physical:load()
+
+    self.streamer = MtaBuildingStaticStreamer(worldInfo.map, defs)
     self.streamer:start()
 
     self.water = WaterLoader(worldInfo.water)
     self.water:load()
 
-    self.physical = PhysicalPropertiesLoader(worldInfo.physical, defs)
-    self.physical:load()
-
     return true
 end
 
 function StaticIMGLoader:unload( )
-    -- We need unload models first to avoid crashes
-    -- Slower and stupid
-    if self.modelLoader then
-        self.modelLoader:unload()
-    end
-
     if self.water then
         self.water:unload()
+    end
+
+    if self.streamer then
+        self.streamer:stop()
     end
 
     if self.physical then
         self.physical:unload()
     end
 
-    if self.streamer then
-        self.streamer:stop()
+    if self.modelLoader then
+        self.modelLoader:unload()
     end
 
     return true

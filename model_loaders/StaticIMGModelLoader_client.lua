@@ -88,7 +88,6 @@ function StaticIMGModelLoader:loadModels( )
     local engineSetModelTXDID = engineSetModelTXDID
     local engineSetModelFlags = engineSetModelFlags
     local engineSetModelLODDistance = engineSetModelLODDistance
-    local engineSetModelPhysicalPropertiesGroup = engineSetModelPhysicalPropertiesGroup
     local engineImageLinkTXD = engineImageLinkTXD
     local engineImageLinkDFF = engineImageLinkDFF
 
@@ -117,7 +116,6 @@ function StaticIMGModelLoader:loadModels( )
 
         engineSetModelFlags( modelId, def[6], true )
         engineSetModelLODDistance( modelId, def[5] )
-        engineSetModelPhysicalPropertiesGroup(modelId, 1)
     end
 
     local defsByType = self.modelDefs

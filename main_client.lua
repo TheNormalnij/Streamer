@@ -40,10 +40,18 @@ end
 addEventHandler( "World:requestLoad", root, loadWorldRPC )
 
 function registerWorld( data )
-    pWorldManager:register( data )
+    if pWorldManager ~= nil then
+        pWorldManager:register(data)
+    else
+        error("World manager is not ready", 2)
+    end
 
 end
 
 function getWorlds()
-    return pWorldManager:getWorldsInfo()
+    if pWorldManager ~= nil then
+        return pWorldManager:getWorldsInfo()
+    else
+        error("World manager is not ready", 2)
+    end
 end

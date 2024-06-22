@@ -92,3 +92,9 @@ restoreAllGameBuildings = nil
 
 ---@type fun()
 resetWaterLevel = nil
+
+---@type fun(modelId: number): number
+engineGetModelPhysicalPropertiesGroup = nil
+
+---@type fun(modelId: number, group: number): boolean
+engineSetModelPhysicalPropertiesGroup = nil

@@ -3,7 +3,7 @@
 ---@field private map IObjectPositionDef[]
 ---@field private defs IDefs
 ---@field private enabled boolean
----@field private buildings Building[]
+---@field private elements Element[]
 MtaBuildingStaticStreamer = class()
 
 ---@param map IObjectPositionDef[]
@@ -12,7 +12,7 @@ function MtaBuildingStaticStreamer:create( map, defs )
     self.map = map
     self.defs = defs
     self.enabled = false
-    self.buildings = {}
+    self.elements = {}
 end
 
 function MtaBuildingStaticStreamer:destroy( )
@@ -47,35 +47,51 @@ function MtaBuildingStaticStreamer:createAllBuilding( )
     local map = self.map
     local defs = self.defs
 
-    local objectData, modelID, def, building, lod
+    local objectData, modelID, def, object, lod
 
-    local loadedBuildings = {}
-    self.buildings = loadedBuildings
+    local loadedElements = {}
+    self.elements = loadedElements
 
     local setLowLODElement = setLowLODElement
     local createBuilding = createBuilding
     local setElementCollisionsEnabled = setElementCollisionsEnabled
+    local engineGetModelPhysicalPropertiesGroup = engineGetModelPhysicalPropertiesGroup
 
     for i = 1, #map do
         objectData = map[i]
         def = defs[ objectData[2] ]
         modelID = objectData[2] and def[1] or objectData[1]
-        building = createBuilding( modelID, objectData[4], objectData[5], objectData[6], objectData[7], objectData[8], objectData[9], objectData[3] )
-        if building then
+
+        if (engineGetModelPhysicalPropertiesGroup(modelID) ~= -1 or objectData[4] < -3000 or objectData[4] > 3000 or objectData[5] < -3000 or objectData[5] > 3000) then
+            -- Load as dummy
+            object = createObject( modelID, objectData[4], objectData[5], objectData[6], objectData[7], objectData[8], objectData[9], objectData[10] )
+            if object then
+                if objectData[3] ~= 0 then
+                    setElementInterior( object, objectData[3] )
+                end
+
+                if def and not def[4] then
+                    setElementCollisionsEnabled( object, false )
+                end
+            else
+                outputDebugString( 'Object can not be created ' ..  modelID, 2 )
+            end
+            loadedElements[i] = object
+        else
+            -- Load as building
+            object = createBuilding( modelID, objectData[4], objectData[5], objectData[6], objectData[7], objectData[8], objectData[9], objectData[3] )
 
             if def and not def[4] then
-                setElementCollisionsEnabled( building, false )
+                setElementCollisionsEnabled( object, false )
             end
             if objectData[11] ~= -1 then
-                lod = loadedBuildings[ objectData[11] ]
+                lod = loadedElements[ objectData[11] ]
                 if lod then
-                    setLowLODElement( building, lod )
+                    setLowLODElement( object, lod )
                 end
             end
-        else
-            outputDebugString( 'Building can not be created ' ..  modelID, 2 )
+            loadedElements[i] = object
         end
-        loadedBuildings[i] = building
     end
 end
 
@@ -83,12 +99,12 @@ end
 function MtaBuildingStaticStreamer:destroyAllBuildings( )
     local destroyElement = destroyElement
 
-    local buildings = self.buildings
+    local buildings = self.elements
     for i = #buildings, 1, -1 do
         if buildings[i] then
             destroyElement(buildings[i])
         end
     end
 
-    self.buildings = {}
+    self.elements = {}
 end
