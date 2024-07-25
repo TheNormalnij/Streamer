@@ -115,17 +115,17 @@ function StaticIMGModelLoader:loadModels( )
         engineImageLinkDFF(img, def[2], modelId)
 
         engineSetModelFlags( modelId, def[6], true )
-        engineSetModelLODDistance( modelId, def[5] )
+        engineSetModelLODDistance( modelId, def[5], true )
     end
 
     local defsByType = self.modelDefs
+    getFreeModelId = AtomicMixedModelManager.getFreeID
     for _, def in pairs( defsByType.atomic ) do
-        getFreeModelId = AtomicMixedModelManager.getFreeID
         loadAtomicModel(def)
     end
 
+    getFreeModelId = ClumpMixedModelManager.getFreeID
     for _, def in pairs( defsByType.clump ) do
-        getFreeModelId = ClumpMixedModelManager.getFreeID
         loadAtomicModel(def)
     end
 
@@ -133,8 +133,8 @@ function StaticIMGModelLoader:loadModels( )
     local engineSetModelVisibleTime = engineSetModelVisibleTime
     local engineGetModelVisibleTime = engineGetModelVisibleTime
 
+    getFreeModelId = TimedMixedModelManager.getFreeID
     for _, def in pairs( defsByType.timed ) do
-        getFreeModelId = TimedMixedModelManager.getFreeID
         loadAtomicModel(def)
         oldVisibleTime[ def[1] ] = { engineGetModelVisibleTime(def[1]) }
         engineSetModelVisibleTime(def[1], def[7], def[8])
