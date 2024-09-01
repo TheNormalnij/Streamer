@@ -33,10 +33,10 @@
 
 	<script src="WorldLoader_client.lua" type="client" />
 	
-	<script src="World_shared.lua"  type="shared" />
+	<script src="worlds/World_shared.lua"  type="shared" />
 	<script src="WorldManager_shared.lua"  type="shared" />
 
-	<script src="WorldSA_client.lua" type="client" />
+	<script src="worlds/WorldSA_shared.lua" type="shared" />
 
 	<script src="debugPipe_client.lua"  type="client" />
 

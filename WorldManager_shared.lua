@@ -47,10 +47,6 @@ function WorldManager:register( data )
 		end
 	end
 
-	if data.imgPath then
-		data.imgs = { pathPreffix .. data.imgPath }
-	end
-
 	data.resource = sourceResource
 	data.resourceRoot = resourceRoot
 

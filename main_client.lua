@@ -7,7 +7,9 @@ local pWorldLoader
 local pWorldManager
 
 addEventHandler( "onClientResourceStart", resourceRoot, function()
+    ---@type WorldManager
 	pWorldManager = WorldManager()
+    ---@type WorldLoader
     pWorldLoader = WorldLoader()
 
     pWorldLoader:loadDefault()
@@ -39,6 +41,7 @@ local function loadWorldRPC(worldName, dimension)
 end
 addEventHandler( "World:requestLoad", root, loadWorldRPC )
 
+-- Exported function
 function registerWorld( data )
     if pWorldManager ~= nil then
         pWorldManager:register(data)
@@ -48,6 +51,7 @@ function registerWorld( data )
 
 end
 
+-- Exported function
 function getWorlds()
     if pWorldManager ~= nil then
         return pWorldManager:getWorldsInfo()

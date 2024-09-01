@@ -2,6 +2,7 @@
 ---@meta
 
 ---@class Element
+---@field destroy fun(this: self): boolean
 ---@class Object : Element
 ---@class Building : Element
 ---@class Water : Element
