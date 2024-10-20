@@ -3,17 +3,19 @@
 ---@alias ITimedDefs number[]
 ---@alias IClumpDefs number[]
 
----@class IDefs
----@field atomic IAtomicDefs[]
----@field timed ITimedDefs[]
----@field clump IClumpDefs[]
-
 ---@alias IObjectPositionDef any[]
 ---@alias IWaterDef number[]
 ---@alias IColDef number[]
 
+---@class IDefsMap
+---@field atomic number
+---@field timed number
+---@field clump number
+---@field damageable number
+
 ---@class IMapInfo
----@field defs IDefs
+---@field defsmap IDefsMap
+---@field defs number[][]
 ---@field colmap IColDef[]
 ---@field map IObjectPositionDef[]
 ---@field water IWaterDef[]

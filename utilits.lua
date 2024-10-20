@@ -28,34 +28,6 @@ function table.copy( t, recursive )
 	return new
 end
 
----@generic V
----@param t V[]
----@return V[]
-function table.copyArray(t)
-	local new = {}
-	for i = 1, #t do
-		new[i] = t[i]
-	end
-	return new
-end
-
----@generic V
----@param first V[]
----@param ... V[]
----@return V[]
-function table.uniteArrays(first, ...)
-	local args = {...}
-	local new = table.copyArray(first)
-	for tIndex = 1, #args do
-		local offset = #new
-		local t = args[tIndex]
-		for i = 1, #t do
-			new[offset + i] = t[i]
-		end
-	end
-	return new
-end
-
 ---@generic K
 ---@generic V
 ---@param t table<K, V>

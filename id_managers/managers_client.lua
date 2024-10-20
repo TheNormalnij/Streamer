@@ -17,6 +17,9 @@ TimedDynamicModelManager = DynamicModelIdManager('timed-object')
 ---@type DynamicModelIdManager
 ClumpDynamicModelManager = DynamicModelIdManager('clump')
 
+---@type DynamicModelIdManager
+DamageableDynamicModelManager = DynamicModelIdManager('damageable-object')
+
 ---@type MixedModelIdManager
 AtomicMixedModelManager = MixedModelIdManager(AtomicSAModelManager, AtomicDynamicModelManager)
 ---@type MixedModelIdManager

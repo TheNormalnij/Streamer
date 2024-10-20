@@ -3,17 +3,19 @@
 ---@field private loadedImgs IMG[]
 ---@field private colLoader ColMapLoader
 ---@field private colmap table<number, { [1]: number, [2]: number }>
----@field private modelDefs IDefs
+---@field private defsMap IDefsMap
+---@field private modelDefs number[][]
 ---@field private imgList string[]
 ---@field private usedTXD number[]
 ---@field private oldVisibleTime table<number, { [1]: number, [2]: number }>
 ---@field private loaded boolean
 StaticIMGModelLoader = class()
-function StaticIMGModelLoader:create( colmap, modelDefs, imgList )
+function StaticIMGModelLoader:create( colmap, modelDefs, defsMap, imgList )
     self.loadedImgs = {}
     self.colLoader = nil
     self.colmap = colmap
     self.modelDefs = modelDefs
+    self.defsMap = defsMap
     self.imgList = imgList
     self.usedTXD = {}
     self.oldVisibleTime = {}
@@ -99,14 +101,7 @@ function StaticIMGModelLoader:loadModels( )
 
     ---@param def IAtomicDefs
     local function loadAtomicModel(def)
-        local modelId
-        if getFreeModelId == AtomicMixedModelManager.getFreeID and bitAnd(def[6], 4096) ~= 0 then
-            modelId = engineRequestModel("object-damagable")
-            iprint("damagable add", modelId)
-        else
-            modelId = getFreeModelId()
-        end
-        --local modelId = getFreeModelId()
+        local modelId = getFreeModelId()
         def[1] = modelId
 
         if def[4] then
@@ -130,15 +125,10 @@ function StaticIMGModelLoader:loadModels( )
         engineSetModelLODDistance( modelId, def[5], true )
     end
 
-    local defsByType = self.modelDefs
+    local defs = self.modelDefs
     getFreeModelId = AtomicMixedModelManager.getFreeID
-    for _, def in pairs( defsByType.atomic ) do
-        loadAtomicModel(def)
-    end
-
-    getFreeModelId = ClumpMixedModelManager.getFreeID
-    for _, def in pairs( defsByType.clump ) do
-        loadAtomicModel(def)
+    for i = 1, self.defsMap.atomic do
+        loadAtomicModel(defs[i])
     end
 
     local oldVisibleTime = self.oldVisibleTime
@@ -146,10 +136,21 @@ function StaticIMGModelLoader:loadModels( )
     local engineGetModelVisibleTime = engineGetModelVisibleTime
 
     getFreeModelId = TimedMixedModelManager.getFreeID
-    for _, def in pairs( defsByType.timed ) do
+    for i = self.defsMap.atomic + 1, self.defsMap.timed do
+        local def = defs[i]
         loadAtomicModel(def)
-        oldVisibleTime[ def[1] ] = { engineGetModelVisibleTime(def[1]) }
+        oldVisibleTime[def[1]] = { engineGetModelVisibleTime(def[1]) }
         engineSetModelVisibleTime(def[1], def[7], def[8])
+    end
+
+    getFreeModelId = ClumpMixedModelManager.getFreeID
+    for i = self.defsMap.timed + 1, self.defsMap.clump do
+        loadAtomicModel(defs[i])
+    end
+
+    getFreeModelId = DamageableDynamicModelManager.getFreeID
+    for i = self.defsMap.clump + 1, self.defsMap.timed do
+        loadAtomicModel(defs[i])
     end
 end;
 
@@ -160,8 +161,6 @@ function StaticIMGModelLoader:unloadModels()
     for i = 1, #txds do
         restoreTxdId(txds[i])
     end
-
-    local defs = self.modelDefs
 
     local engineResetModelTXDID = engineResetModelTXDID
     local engineRestoreCOL = engineRestoreCOL
@@ -183,14 +182,11 @@ function StaticIMGModelLoader:unloadModels()
         freeModel(modelID)
     end
 
-    freeModel = AtomicMixedModelManager.restoreID
-    for _, def in pairs( defs.atomic ) do
-        unloadAtomic(def)
-    end
+    local defs = self.modelDefs
 
-    freeModel = ClumpMixedModelManager.restoreID
-    for _, def in pairs( defs.clump ) do
-        unloadAtomic(def)
+    freeModel = AtomicMixedModelManager.restoreID
+    for i = 1, self.defsMap.atomic do
+        unloadAtomic(defs[i])
     end
 
     local oldVisibleTime = self.oldVisibleTime
@@ -198,9 +194,20 @@ function StaticIMGModelLoader:unloadModels()
 
     freeModel = TimedMixedModelManager.restoreID
     local engineSetModelVisibleTime = engineSetModelVisibleTime
-    for _, def in pairs( defs.timed ) do
+    for i = self.defsMap.atomic + 1, self.defsMap.timed do
+        local def = defs[i]
         visibleTime = oldVisibleTime[def[1]]
         engineSetModelVisibleTime(def[1], visibleTime[1], visibleTime[2])
         unloadAtomic(def)
+    end
+
+    freeModel = ClumpMixedModelManager.restoreID
+    for i = self.defsMap.timed + 1, self.defsMap.clump do
+        unloadAtomic(defs[i])
+    end
+
+    freeModel = DamageableDynamicModelManager.restoreID
+    for i = self.defsMap.clump + 1, self.defsMap.damageable do
+        unloadAtomic(defs[i])
     end
 end

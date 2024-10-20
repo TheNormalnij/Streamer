@@ -43,10 +43,9 @@ function StaticIMGLoader:load( )
         engineSetPoolCapacity('building', requiredPoolSize)
     end
 
-    self.modelLoader = StaticIMGModelLoader(worldInfo.colmap, worldInfo.defs, self.world:getIMGs())
+    local defs = worldInfo.defs
+    self.modelLoader = StaticIMGModelLoader(worldInfo.colmap, defs, worldInfo.defsmap, self.world:getIMGs())
     self.modelLoader:load()
-
-    local defs = table.uniteArrays(worldInfo.defs.atomic, worldInfo.defs.timed, worldInfo.defs.clump)
 
     self.physical = PhysicalPropertiesLoader(worldInfo.physical, defs)
     self.physical:load()
