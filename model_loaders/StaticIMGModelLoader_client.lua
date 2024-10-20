@@ -7,6 +7,7 @@
 ---@field private imgList string[]
 ---@field private usedTXD number[]
 ---@field private oldVisibleTime table<number, { [1]: number, [2]: number }>
+---@field private loaded boolean
 StaticIMGModelLoader = class()
 function StaticIMGModelLoader:create( colmap, modelDefs, imgList )
     self.loadedImgs = {}
@@ -16,10 +17,13 @@ function StaticIMGModelLoader:create( colmap, modelDefs, imgList )
     self.imgList = imgList
     self.usedTXD = {}
     self.oldVisibleTime = {}
+    self.loaded = false
 end;
 
 function StaticIMGModelLoader:destroy( )
-    self:unload()
+    if self.loaded then
+        self:unload()
+    end
     safeDestroy(self.colLoader)
 end;
 
@@ -28,6 +32,7 @@ function StaticIMGModelLoader:load( )
     self:loadCOLs( self.colmap )
     self:loadModels( )
     engineRestreamWorld(true)
+    self.loaded = true
 end;
 
 function StaticIMGModelLoader:unload( )
@@ -94,7 +99,14 @@ function StaticIMGModelLoader:loadModels( )
 
     ---@param def IAtomicDefs
     local function loadAtomicModel(def)
-        local modelId = getFreeModelId()
+        local modelId
+        if getFreeModelId == AtomicMixedModelManager.getFreeID and bitAnd(def[6], 4096) ~= 0 then
+            modelId = engineRequestModel("object-damagable")
+            iprint("damagable add", modelId)
+        else
+            modelId = getFreeModelId()
+        end
+        --local modelId = getFreeModelId()
         def[1] = modelId
 
         if def[4] then
