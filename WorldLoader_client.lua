@@ -21,7 +21,6 @@ function WorldLoader:destroy( )
     self:load(self.default)
 end;
 
----@private
 ---@param world World
 ---@return boolean
 function WorldLoader:load( world )

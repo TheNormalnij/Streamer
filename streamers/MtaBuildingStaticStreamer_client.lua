@@ -1,13 +1,13 @@
 
 ---@class (exact) MtaBuildingStaticStreamer : IStreamer, IWithDestructor
 ---@field private map IObjectPositionDef[]
----@field private defs IDefs
+---@field private defs number[][]
 ---@field private enabled boolean
 ---@field private elements Element[]
 MtaBuildingStaticStreamer = class()
 
 ---@param map IObjectPositionDef[]
----@param defs IDefs
+---@param defs number[][]
 function MtaBuildingStaticStreamer:create( map, defs )
     self.map = map
     self.defs = defs

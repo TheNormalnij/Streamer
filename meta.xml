@@ -31,6 +31,11 @@
 	<script src="map_readers/lua_client.lua" type="client" />
 	<script src="map_readers/readMap_client.lua" type="client" />
 
+	<script src="utils/protectedElementData_server.lua" type="server" />
+	<script src="settings/Settings_shared.lua" type="shared" />
+	<script src="settings/ClientSettings_client.lua" type="client" />
+	<script src="settings/ServerSettings_server.lua" type="server" />
+
 	<script src="WorldLoader_client.lua" type="client" />
 	
 	<script src="worlds/World_shared.lua"  type="shared" />
@@ -45,6 +50,24 @@
 
 	<export function="registerWorld" type="shared" />
 	<export function="getWorlds" type="shared" />
+
+	<settings>
+		<!--- future
+		<setting name="*worldmode" value="single"
+			friendlyname="Worlds processing mode"
+			accept="*"
+			examples="single,multiple"
+			desc="single - load only one world exclusive, multiple - allow load several worlds"
+		/>
+		-->
+
+		<setting name="*default_world" value="SA"
+			friendlyname="Default game world"
+			accept="*"
+			examples="SA"
+			desc="The loader will autoload this world for all players. Use 'SA' for default San Andreas map"
+		/>
+    </settings>
 
 	<download_priority_group>200</download_priority_group>
 </meta>

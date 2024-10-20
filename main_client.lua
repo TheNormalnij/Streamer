@@ -5,14 +5,26 @@ addEvent("World:requestLoad", true)
 local pWorldLoader
 ---@type WorldManager | nil
 local pWorldManager
+---@type ClientSettins
+local pSettings
+
+local wasDefaultWorldLoaded = false
 
 addEventHandler( "onClientResourceStart", resourceRoot, function()
     ---@type WorldManager
 	pWorldManager = WorldManager()
     ---@type WorldLoader
     pWorldLoader = WorldLoader()
+    ---@type ClientSettins
+    pSettings = ClientSettins()
 
-    pWorldLoader:loadDefault()
+    local defaultWorld = pWorldManager:getFromName(pSettings:get("default_world"))
+    if defaultWorld then
+        pWorldLoader:load(defaultWorld)
+        wasDefaultWorldLoaded = true
+    else
+        pWorldLoader:loadDefault()
+    end
 end )
 
 addEventHandler( "onClientResourceStop", resourceRoot, function()
@@ -43,8 +55,12 @@ addEventHandler( "World:requestLoad", root, loadWorldRPC )
 
 -- Exported function
 function registerWorld( data )
-    if pWorldManager ~= nil then
-        pWorldManager:register(data)
+    if pWorldManager ~= nil and pWorldLoader ~= nil then
+        local world = pWorldManager:register(data)
+        if not wasDefaultWorldLoaded then
+            pWorldLoader:load(world)
+            wasDefaultWorldLoaded = true
+        end
     else
         error("World manager is not ready", 2)
     end
