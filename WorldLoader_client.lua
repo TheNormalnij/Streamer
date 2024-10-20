@@ -13,6 +13,7 @@ function WorldLoader:create( )
     ---@type World[]
     self.defaultLoaded = { self.default }
     ---@private
+    ---@type table<World, ILoader>
     self.instances = {}
 end;
 
@@ -60,6 +61,7 @@ function WorldLoader:tryLoadWorld( world )
 
     local ticks = getTickCount()
 
+    ---@type ILoader
     local instance = loaderClass(world)
     if instance:load() then
         self.instances[world] = instance
@@ -80,6 +82,7 @@ function WorldLoader:tryUnloadWorld( world )
     local instance = self.instances[world]
     if instance then
         instance:unload()
+        self.instances[world] = nil
         return true
     else
         return false
