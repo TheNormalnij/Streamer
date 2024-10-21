@@ -43,7 +43,9 @@
 
 	<script src="worlds/WorldSA_shared.lua" type="shared" />
 
-	<script src="debugPipe_client.lua"  type="client" />
+	<!--
+	<script src="debug/debugPipe_client.lua"  type="client" />
+	-->
 
 	<script src="main_client.lua"  type="client" />
 	<script src="main_server.lua"  type="server" />
