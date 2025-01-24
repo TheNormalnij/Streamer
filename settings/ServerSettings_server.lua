@@ -8,7 +8,6 @@ ServerSettings = class()
 
 function ServerSettings:create()
     self.rootElement = Element("StreamerSettingsRoot", "StreamerSettingsRoot")
-    protectElementData(self.rootElement)
 
     local this = self
     self:syncWithRegistry()
@@ -43,5 +42,5 @@ end
 ---@param param setting
 ---@param value any
 function ServerSettings:set(param, value)
-    self.rootElement:setData(param, value)
+    self.rootElement:setData(param, value, "broadcast", "deny")
 end

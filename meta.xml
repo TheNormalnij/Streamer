@@ -31,7 +31,6 @@
 	<script src="map_readers/lua_client.lua" type="client" />
 	<script src="map_readers/readMap_client.lua" type="client" />
 
-	<script src="utils/protectedElementData_server.lua" type="server" />
 	<script src="settings/Settings_shared.lua" type="shared" />
 	<script src="settings/ClientSettings_client.lua" type="client" />
 	<script src="settings/ServerSettings_server.lua" type="server" />
