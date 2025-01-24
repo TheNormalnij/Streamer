@@ -8,7 +8,7 @@ local pWorldManager
 ---@type ClientSettins
 local pSettings
 
-local wasDefaultWorldLoaded = false
+local wasDefaultWorldInited = false
 
 addEventHandler( "onClientResourceStart", resourceRoot, function()
     ---@type WorldManager
@@ -16,15 +16,14 @@ addEventHandler( "onClientResourceStart", resourceRoot, function()
     ---@type WorldLoader
     pWorldLoader = WorldLoader()
     ---@type ClientSettins
-    pSettings = ClientSettins()
+    pSettings = ClientSettings()
 
     local defaultWorld = pWorldManager:getFromName(pSettings:get("default_world"))
     if defaultWorld then
-        pWorldLoader:load(defaultWorld)
-        wasDefaultWorldLoaded = true
-    else
-        pWorldLoader:loadDefault()
+        pWorldLoader:setDefaultWorld(defaultWorld)
+        wasDefaultWorldInited = true
     end
+    pWorldLoader:loadDefault()
 end )
 
 addEventHandler( "onClientResourceStop", resourceRoot, function()
@@ -55,16 +54,24 @@ addEventHandler( "World:requestLoad", root, loadWorldRPC )
 
 -- Exported function
 function registerWorld( data )
-    if pWorldManager ~= nil and pWorldLoader ~= nil then
-        local world = pWorldManager:register(data)
-        if not wasDefaultWorldLoaded then
-            pWorldLoader:load(world)
-            wasDefaultWorldLoaded = true
-        end
-    else
+    if pWorldManager == nil or pWorldLoader == nil then
         error("World manager is not ready", 2)
     end
 
+    local world = pWorldManager:register(data)
+    if world.name == pSettings:get("default_world") then
+        pWorldLoader:setDefaultWorld(world)
+        if not wasDefaultWorldInited then
+            wasDefaultWorldInited = true
+            pWorldLoader:unloadAllCurrent();
+            pWorldLoader:loadDefault()
+        end
+    end
+
+    addEventHandler("onClientElementDestroy", sourceResourceRoot, function()
+        pWorldManager:removeWorld(world)
+        pWorldLoader:removeWorld(world)
+    end)
 end
 
 -- Exported function

@@ -1,25 +1,28 @@
 
 ---@class WorldLoader : Class
+---@field public worldSA WorldSA
+---@field private default World[]
+---@field private instances table<World, ILoader>
 WorldLoader = class()
 
 function WorldLoader:create( )
-    ---@private
-    ---@type WorldSA
-    self.default = WorldSA()
-    ---@private
-    ---@type World[]
-    self.currentWorlds = { self.default }
-    ---@private
-    ---@type World[]
-    self.defaultLoaded = { self.default }
-    ---@private
-    ---@type table<World, ILoader>
+    self.worldSA = WorldSA()
+    self.default = { self.worldSA }
     self.instances = {}
 end;
 
 function WorldLoader:destroy( )
-    self:load(self.default)
+    self:load(self.worldSA)
 end;
+
+---@param ... World
+function WorldLoader:setDefaultWorld(...)
+    self.default = { ... }
+end
+
+function WorldLoader:isLoadedAnyWorld()
+    return next(self.instances) ~= nil
+end
 
 ---@param world World
 ---@return boolean
@@ -29,7 +32,6 @@ function WorldLoader:load( world )
     outputDebugString("Loading world: " .. tostring(world.name), 3)
 
     if self:tryLoadWorld(world) then
-        table.insert(self.currentWorlds, world)
         return true
     else
         self:loadDefault()
@@ -56,7 +58,6 @@ function WorldLoader:tryLoadWorld( world )
         outputDebugString("Can not find loader for world " .. tostring(world.name), 2)
         return false
     end
-
 
     local ticks = getTickCount()
 
@@ -91,17 +92,24 @@ end;
 function WorldLoader:unloadAllCurrent( )
     outputDebugString("Unload all current worlds", 3)
 
-    for i = #self.currentWorlds, 1, -1 do
-        self:tryUnloadWorld(self.currentWorlds[i])
-        self.currentWorlds[i] = nil
+    for world, instance in next, self.instances do
+        instance:unload()
+        self.instances[world] = nil
     end
 end;
 
 function WorldLoader:loadDefault( )
     outputDebugString("Load default world", 3)
 
-    for _, world in ipairs(self.defaultLoaded) do
+    for _, world in ipairs(self.default) do
         self:tryLoadWorld(world)
-        table.insert(self.currentWorlds, world)
+    end
+end
+
+---@param world World
+function WorldLoader:removeWorld(world)
+    self:tryUnloadWorld(world)
+    if self.default == world then
+        self.default = {}
     end
 end

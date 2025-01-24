@@ -4,9 +4,9 @@ addEvent("World:onSettingSync", true)
 
 ---@class ClientSettins : EventEmmiter
 ---@field private settings table<setting, any>
-ClientSettins = EventEmiter:inherit()
+ClientSettings = EventEmiter:inherit()
 
-function ClientSettins:create()
+function ClientSettings:create()
     self.settings = {}
     self.rpc = getElementsByType("StreamerSettingsRoot", resourceRoot)[1]
     for key, value in pairs(SETTINGS_DEFAULT) do
@@ -21,12 +21,12 @@ end
 
 ---@param key setting
 ---@param param any
-function ClientSettins:set(key, param)
+function ClientSettings:set(key, param)
     self.settings[key] = param
     self:emit("changed", key, param)
 end
 
 ---@param key setting
-function ClientSettins:get(key)
+function ClientSettings:get(key)
     return self.settings[key]
 end

@@ -1,10 +1,12 @@
 <meta>
-	<info type="script" name="World loader" author="TheNormalnij" description="World loader" version="1.1" />
+	<info type="script" name="World loader" author="TheNormalnij" description="World loader"
+		version="1.1" />
 	<min_mta_version client="1.6.0-9.22476" />
 	<oop>true</oop>
 
 	<script src="class.lua" type="shared" />
 	<script src="utilits.lua" type="shared" />
+	<script src="utils/EventEmiter_shared.lua" type="shared" />
 
 	<script src="features/ColMapLoader_client.lua"  type="client" />
 	<script src="features/WaterLoader_client.lua"  type="client" />

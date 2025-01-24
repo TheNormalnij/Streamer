@@ -52,8 +52,10 @@ function MtaBuildingStaticStreamer:createAllBuilding( )
     local loadedElements = {}
     self.elements = loadedElements
 
+    local setElementInterior = setElementInterior
     local setLowLODElement = setLowLODElement
     local createBuilding = createBuilding
+    local createObject = createObject
     local setElementCollisionsEnabled = setElementCollisionsEnabled
     local engineGetModelPhysicalPropertiesGroup = engineGetModelPhysicalPropertiesGroup
 

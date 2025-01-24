@@ -3,7 +3,7 @@
 DynamicModelIdManager = class()
 
 ---comment
----@param modelType 'object' | 'clump' | 'timed-object' | 'ped' | 'vehicle'
+---@param modelType 'object' | 'clump' | 'timed-object' | 'ped' | 'vehicle' | 'damageable-object'
 function DynamicModelIdManager:create(modelType)
     local engineRequestModel = engineRequestModel
 

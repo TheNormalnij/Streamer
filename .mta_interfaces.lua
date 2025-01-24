@@ -86,10 +86,10 @@ addEventHandler = nil
 triggerEvent = nil
 
 ---@type fun()
-removeAllGameBuildings = nil
+restoreGameWorld = nil
 
 ---@type fun()
-restoreAllGameBuildings = nil
+removeGameWorld = nil
 
 ---@type fun()
 resetWaterLevel = nil
