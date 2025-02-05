@@ -5,7 +5,7 @@ This resource provide loader and API for big MTA maps.
 ### Features
 - Effective map data structures.
 - IMG streaming. You can save more RAM for your gamemode.
-- Buildings API. Big maps doesn't cause FPS drops.
+- Buildings API. Big maps don't cause FPS drops.
 - LOD support.
 - Damageable objects support.
 - Physical objects support.
