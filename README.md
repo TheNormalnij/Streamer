@@ -20,7 +20,7 @@ This resource provide loader and API for big MTA maps.
 3. Start streamer and the resource
 4. Load the world `/loadworld <world name>`
 
-# Avtomatic world loading
+# Automatic world loading
 
 1. Copy a world resource into server resources folder.
 2. Open resources tab in your admin panel. Select `Streamer` and click settings.
@@ -28,5 +28,5 @@ This resource provide loader and API for big MTA maps.
 4. Start `Streamer` and your world resource.
 
 # Documentation
-- (API)[doc/api.md]
-- (Settings)[doc/settings.md]
+- [API](doc/api.md)
+- [Settings](doc/settings.md)

@@ -38,7 +38,7 @@ function ServerSettings:syncWithRegistry()
     end
 end
 
----@public
+---@private
 ---@param param setting
 ---@param value any
 function ServerSettings:set(param, value)

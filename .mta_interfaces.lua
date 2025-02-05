@@ -57,7 +57,7 @@ engineSetModelVisibleTime = nil
 ---@type fun(modelId: number): number, number
 engineGetModelVisibleTime = nil
 
----@type fun(type: 'object' | 'clump' | 'timed-object' | 'ped' | 'vehicle'): number | false
+---@type fun(type: 'object' | 'clump' | 'timed-object' | 'ped' | 'vehicle' | 'damageable-object'): number | false
 engineRequestModel = nil
 
 ---@type fun(id: number): boolean
